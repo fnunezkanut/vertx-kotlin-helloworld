@@ -21,7 +21,8 @@ apply plugin: 'application'
 apply plugin: "com.github.johnrengelman.shadow"
 
 sourceCompatibility = 1.8
-mainClassName = 'io.vertx.core.Launcher'
+//mainClassName = 'io.vertx.core.Launcher'
+mainClassName = "com.github.fnunezkanut.MainKt"
 
 repositories {
     mavenCentral()
@@ -33,7 +34,12 @@ dependencies {
     compile "io.vertx:vertx-core:$vertx_version"
     compile "io.vertx:vertx-lang-kotlin:$vertx_version"
     compile "io.vertx:vertx-web:$vertx_version"
+    compile "ch.qos.logback:logback-classic:1.2.3"
+
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testCompile "junit:junit:4.12"
+    testCompile "io.vertx:vertx-unit:$vertx_version"
 }
 
 
@@ -45,14 +51,4 @@ compileTestKotlin {
 }
 task wrapper(type: Wrapper) {
     gradleVersion = "4.6"
-}
-
-shadowJar {
-    classifier = 'fat'
-    manifest {
-        attributes 'Main-Verticle': 'com.github.fnunezkanut.HelloVerticle'
-    }
-    mergeServiceFiles {
-        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
-    }
 }
